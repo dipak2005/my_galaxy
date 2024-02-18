@@ -32,19 +32,21 @@ class _AllState extends State<All> with TickerProviderStateMixin {
       parent: animationController, curve: FlippedCurve(Curves.linear));
 
   @override
-  void didChangeDependencies() {
+ void initState() {
     animationController.repeat();
-    super.didChangeDependencies();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    var style = TextStyle(
+        color: Colors.white, fontWeight: FontWeight.w700, fontSize: 17);
     return Column(
       children: [
         Consumer<AnimatePro>(
           builder: (BuildContext context, value, Widget? child) {
             return SizedBox(
-              height: MediaQuery.sizeOf(context).height / 2.7,
+              height: MediaQuery.sizeOf(context).height / 2.9,
               width: MediaQuery.sizeOf(context).width,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -173,17 +175,82 @@ class _AllState extends State<All> with TickerProviderStateMixin {
                 ))
           ],
         ),
-        // ListView.builder(
-        //   shrinkWrap: true,
-        //   itemBuilder: (context, index) {
-        //     return Container(
-        //       height: MediaQuery.sizeOf(context).height/3,
-        //       width: MediaQuery.sizeOf(context).width,
-        //       margin: EdgeInsets.all(10),
-        //       decoration: BoxDecoration(color: Color(0xff0B1418)),
-        //     );
-        //   },
-        // )
+        Consumer<AnimatePro>(
+          builder: (BuildContext context, value, Widget? child) {
+            return SizedBox(
+              height: MediaQuery.sizeOf(context).height*0.3,
+              child: ListView.builder(
+                itemCount: value.favList.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  Planet fav = value.favList[index];
+                  return Container(
+                      height: MediaQuery.sizeOf(context).height / 2.7,
+                      width: MediaQuery.sizeOf(context).width,
+                      margin: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        color: Color(0xff0B1418),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Hero(
+                                tag: index,
+                                child: AnimatedBuilder(
+                                  animation: animationController,
+                                  builder:
+                                      (BuildContext context, Widget? child) {
+                                    return Transform.rotate(
+                                      angle: animationController.value,
+                                      child: child,
+                                    );
+                                  },
+                                  child: Image.asset(
+                                    fav.image ?? "",
+                                    height: 150,
+                                    width: 200,
+                                  ),
+                                ),
+                              ),
+                              Column(
+                                children: [
+                                  Text(
+                                    fav.name ?? "",
+                                    style: style,
+                                  ),
+                                  Text(
+                                    fav.spe ?? "",
+                                    style: style,
+                                  ),
+                                ],
+                              ),
+                              IconButton(
+                                  onPressed: () {
+                                    value.remove(index);
+                                  },
+                                  icon: Icon(
+                                    Icons.cancel,
+                                    color: Colors.white,
+                                    size: 40,
+                                  ))
+                            ],
+                          ),
+                          Text(
+                            fav.detail ?? "",
+                            style: style,
+                          ),
+                        ],
+                      )
+                  );
+                },
+              ),
+            );
+          },
+        )
       ],
     );
   }

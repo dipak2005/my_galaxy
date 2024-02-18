@@ -32,9 +32,9 @@ class _PlanetsState extends State<Planets> with TickerProviderStateMixin {
       parent: animationController, curve: FlippedCurve(Curves.linear));
 
   @override
-  void didChangeDependencies() {
+  void initState() {
     animationController.repeat();
-    super.didChangeDependencies();
+    super.initState();
   }
 
   @override
@@ -49,16 +49,17 @@ class _PlanetsState extends State<Planets> with TickerProviderStateMixin {
               var pam = widget.pm?[index];
               return Stack(
                 children: [
-                  InkWell(onTap: () {
-                    value.playIndex(index);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DetailPage(
-                            pm: pam, index: value.planetIndex),
-                      ),
-                    );
-                  },
+                  InkWell(
+                    onTap: () {
+                      value.playIndex(index);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              DetailPage(pm: pam, index: value.planetIndex),
+                        ),
+                      );
+                    },
                     child: Container(
                       height: MediaQuery.sizeOf(context).height * 0.3,
                       width: MediaQuery.sizeOf(context).width / 1.6,
@@ -83,9 +84,10 @@ class _PlanetsState extends State<Planets> with TickerProviderStateMixin {
                                     );
                                   },
                                   child: Container(
-                                    height:
-                                        MediaQuery.sizeOf(context).height * 0.18,
-                                    width: MediaQuery.sizeOf(context).width / 1.6,
+                                    height: MediaQuery.sizeOf(context).height *
+                                        0.18,
+                                    width:
+                                        MediaQuery.sizeOf(context).width / 1.6,
                                     margin: EdgeInsets.symmetric(horizontal: 5),
                                     decoration: BoxDecoration(
                                       color: Color(0xff0B1418),
@@ -104,7 +106,8 @@ class _PlanetsState extends State<Planets> with TickerProviderStateMixin {
                                           ),
                                           subtitle: Text(
                                             pam?.spe ?? "",
-                                            style: TextStyle(color: Colors.white),
+                                            style:
+                                                TextStyle(color: Colors.white),
                                           ),
                                           // trailing: IconButton(
                                           //     onPressed: () {
@@ -154,6 +157,10 @@ class _PlanetsState extends State<Planets> with TickerProviderStateMixin {
                         );
                       },
                     ),
+                  ),
+                  Text(
+                    "data",
+                    style: TextStyle(color: Colors.white),
                   ),
                 ],
               );

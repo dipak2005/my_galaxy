@@ -17,9 +17,25 @@ class AnimatePro extends ChangeNotifier {
   List<Planet> favList = [];
   String favStr = "";
   Duration duration = Duration();
+  List<Planet> foundList = [];
 
   void changeIndex(int index) {
     typeIndex = index;
+    notifyListeners();
+  }
+
+  void runFiLLTer(String key) {
+    List<Planet> result = [];
+    if (key.isEmpty) {
+      result = planetList;
+    } else {
+      result = planetList
+          .where((element) => element.name.toString().contains(
+                key.toLowerCase(),
+              ))
+          .toList();
+    }
+    foundList = result;
     notifyListeners();
   }
 
@@ -29,18 +45,20 @@ class AnimatePro extends ChangeNotifier {
     preferences.setString("favStr", favStr);
     notifyListeners();
   }
-void remove(int index){
+
+  void remove(int index) {
     favList.removeAt(index);
     notifyListeners();
-}
-  void getFavList() async {
-    String? favStr = preferences.getString("favStr");
-    if (favStr != null) {
-      List<dynamic> decode = jsonDecode(favStr);
-      decode.map((json) => json.fromJson(json)).toList();
-    }
-    notifyListeners();
   }
+
+  // void getFavList() async {
+  //   String? favStr = preferences.getString("favStr");
+  //   if (favStr != null) {
+  //     List<dynamic> decode = jsonDecode(favStr);
+  //     decode.map((json) => json.fromJson(json)).toList();
+  //   }
+  //   notifyListeners();
+  // }
 
   void playIndex(int index) {
     planetIndex = index;

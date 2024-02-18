@@ -25,17 +25,20 @@ class _LikePageState extends State<LikePage> with TickerProviderStateMixin {
       parent: animationController, curve: FlippedCurve(Curves.linear));
 
   @override
-  void initState() {
-    var pro = Provider.of<AnimatePro>(context, listen: false);
-    pro.getValue();
-    super.initState();
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
   }
 
   @override
-  void didChangeDependencies() {
-    animationController.repeat();
-    super.didChangeDependencies();
+  void initState() {
+    var pro = Provider.of<AnimatePro>(context, listen: false);
+    // pro.getFavList();
+    super.initState();
   }
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +59,10 @@ class _LikePageState extends State<LikePage> with TickerProviderStateMixin {
                   Navigator.pop(context);
                 },
                 icon: AnimatedIcon(
-                  icon:AnimatedIcons.menu_arrow ,
+                  icon: AnimatedIcons.arrow_menu,
                   size: 30,
-                  color: Colors.white, progress: animationController,
+                  color: Colors.white,
+                  progress: animationController,
                 ),
               ),
             ),
@@ -79,15 +83,14 @@ class _LikePageState extends State<LikePage> with TickerProviderStateMixin {
                       decoration: BoxDecoration(
                           color: Color(0xff0B1418),
                           borderRadius: BorderRadius.circular(20)),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Hero(
-                                tag: index,
-                                child: AnimatedBuilder(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          // mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                AnimatedBuilder(
                                   animation: animationController,
                                   builder:
                                       (BuildContext context, Widget? child) {
@@ -99,38 +102,39 @@ class _LikePageState extends State<LikePage> with TickerProviderStateMixin {
                                   child: Image.asset(
                                     fav.image ?? "",
                                     height: 150,
-                                    width: 200,
+                                    width: 180,
                                   ),
                                 ),
-                              ),
-                              Column(
-                                children: [
-                                  Text(
-                                    fav.name ?? "",
-                                    style: style,
-                                  ),
-                                  Text(
-                                    fav.spe ?? "",
-                                    style: style,
-                                  ),
-                                ],
-                              ),
-                              IconButton(
-                                  onPressed: () {
-                                    value.remove(index);
-                                  },
-                                  icon: Icon(
-                                    Icons.cancel,
-                                    color: Colors.white,
-                                    size: 40,
-                                  ))
-                            ],
-                          ),
-                          Text(
-                            fav.detail ?? "",
-                            style: style,
-                          ),
-                        ],
+                                Column(
+                                  children: [
+                                    Text(
+                                      fav.name ?? "",
+                                      style: style,
+                                    ),
+                                    Text(
+                                      fav.spe ?? "",
+                                      style: style,
+                                    ),
+                                    IconButton(
+                                        onPressed: () {
+                                          value.remove(index);
+                                        },
+                                        icon: Icon(
+                                          Icons.cancel_presentation,
+                                          color: Colors.white,
+                                          size: 40,
+                                        ))
+                                  ],
+                                ),
+
+                              ],
+                            ),
+                            Text(
+                              fav.detail ?? "",
+                              style: style,
+                            ),
+                          ],
+                        ),
                       ),
                     );
                   },
@@ -155,7 +159,7 @@ class _LikePageState extends State<LikePage> with TickerProviderStateMixin {
                       height: 20,
                     ),
                     Hero(
-                      tag: "like",
+                      tag: "home",
                       child: ElevatedButton(
                         style: ButtonStyle(
                             shape: MaterialStatePropertyAll(
