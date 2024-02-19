@@ -32,7 +32,7 @@ class _AllState extends State<All> with TickerProviderStateMixin {
       parent: animationController, curve: FlippedCurve(Curves.linear));
 
   @override
- void initState() {
+  void initState() {
     animationController.repeat();
     super.initState();
   }
@@ -68,13 +68,8 @@ class _AllState extends State<All> with TickerProviderStateMixin {
                                 InkWell(
                                   onTap: () {
                                     value.playIndex(index);
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => DetailPage(
-                                            pm: pam, index: value.planetIndex),
-                                      ),
-                                    );
+                                    Navigator.pushNamed(context, "DetailPage",
+                                        arguments: pam);
                                   },
                                   child: Container(
                                     height:
@@ -91,7 +86,7 @@ class _AllState extends State<All> with TickerProviderStateMixin {
                                       children: [
                                         ListTile(
                                           title: Text(
-                                            pam?.name ?? "",
+                                            (pam?.name ?? "").toUpperCase(),
                                             style: TextStyle(
                                                 color: Colors.white,
                                                 fontWeight: FontWeight.w700,
@@ -107,16 +102,9 @@ class _AllState extends State<All> with TickerProviderStateMixin {
                                                 animationController.reverse(
                                                     from: 0);
                                                 value.playIndex(index);
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        DetailPage(
-                                                            pm: pam,
-                                                            index: value
-                                                                .planetIndex),
-                                                  ),
-                                                );
+                                                Navigator.pushNamed(
+                                                    context, "DetailPage",
+                                                    arguments: pam);
                                               },
                                               icon: Icon(
                                                 Icons.arrow_forward_ios,
@@ -133,18 +121,21 @@ class _AllState extends State<All> with TickerProviderStateMixin {
                           ],
                         ),
                       ),
-                      AnimatedBuilder(
-                        animation: animationController,
-                        builder: (BuildContext context, Widget? child) {
-                          return Transform.rotate(
-                            angle: animationController.value,
-                            child: child,
-                          );
-                        },
-                        child: Image.asset(
-                          pam?.image ?? "",
-                          height: 170,
-                          width: 210,
+                      Hero(
+                        tag: index,
+                        child: AnimatedBuilder(
+                          animation: animationController,
+                          builder: (BuildContext context, Widget? child) {
+                            return Transform.rotate(
+                              angle: animationController.value,
+                              child: child,
+                            );
+                          },
+                          child: Image.asset(
+                            pam?.image ?? "",
+                            height: 170,
+                            width: 210,
+                          ),
                         ),
                       ),
                     ],
@@ -178,7 +169,7 @@ class _AllState extends State<All> with TickerProviderStateMixin {
         Consumer<AnimatePro>(
           builder: (BuildContext context, value, Widget? child) {
             return SizedBox(
-              height: MediaQuery.sizeOf(context).height*0.3,
+              height: MediaQuery.sizeOf(context).height * 0.3,
               child: ListView.builder(
                 itemCount: value.favList.length,
                 shrinkWrap: true,
@@ -244,8 +235,7 @@ class _AllState extends State<All> with TickerProviderStateMixin {
                             style: style,
                           ),
                         ],
-                      )
-                  );
+                      ));
                 },
               ),
             );

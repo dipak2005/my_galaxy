@@ -1,7 +1,7 @@
 [
   {
     "position": "0",
-    "name": "Sun",
+    "name": "sun",
     "spe:": "Yellow Dwarf",
     "image": "assets/sun.png",
     "Equatorial Distance": "1.39 M KM",
@@ -18,7 +18,7 @@
   },
   {
     "position": "1",
-    "name": "Mercury",
+    "name": "mercury",
     "spe:": "Planet",
     "image": "assets/mer.png",
     "Equatorial Diameter": "4 879  KM",

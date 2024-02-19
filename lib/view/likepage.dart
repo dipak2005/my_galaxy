@@ -33,7 +33,7 @@ class _LikePageState extends State<LikePage> with TickerProviderStateMixin {
   @override
   void initState() {
     var pro = Provider.of<AnimatePro>(context, listen: false);
-    // pro.getFavList();
+    pro.getFavList();
     super.initState();
   }
 
@@ -52,18 +52,15 @@ class _LikePageState extends State<LikePage> with TickerProviderStateMixin {
           radius: 30,
           backgroundColor: Color(0xff0B1418),
           child: Center(
-            child: Hero(
-              tag: "like",
-              child: IconButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                icon: AnimatedIcon(
-                  icon: AnimatedIcons.arrow_menu,
-                  size: 30,
-                  color: Colors.white,
-                  progress: animationController,
-                ),
+            child: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: AnimatedIcon(
+                icon: AnimatedIcons.menu_arrow,
+                size: 30,
+                color: Colors.white,
+                progress: animationController,
               ),
             ),
           ),
@@ -158,24 +155,21 @@ class _LikePageState extends State<LikePage> with TickerProviderStateMixin {
                     SizedBox(
                       height: 20,
                     ),
-                    Hero(
-                      tag: "home",
-                      child: ElevatedButton(
-                        style: ButtonStyle(
-                            shape: MaterialStatePropertyAll(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
+                    ElevatedButton(
+                      style: ButtonStyle(
+                          shape: MaterialStatePropertyAll(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                            backgroundColor:
-                                MaterialStatePropertyAll(Colors.red)),
-                        onPressed: () {
-                          Navigator.pushNamed(context, "Home");
-                        },
-                        child: Text(
-                          "Like the Planet",
-                          style: TextStyle(color: Colors.white),
-                        ),
+                          ),
+                          backgroundColor:
+                              MaterialStatePropertyAll(Colors.red)),
+                      onPressed: () {
+                        Navigator.pushNamed(context, "Home");
+                      },
+                      child: Text(
+                        "Like the Planet",
+                        style: TextStyle(color: Colors.white),
                       ),
                     )
                   ],
