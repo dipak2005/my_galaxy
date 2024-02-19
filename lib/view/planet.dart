@@ -20,6 +20,8 @@ class Planets extends StatefulWidget {
   State<Planets> createState() => _PlanetsState();
 }
 
+int? hIndex;
+
 class _PlanetsState extends State<Planets> with TickerProviderStateMixin {
   late final animationController = AnimationController(
     vsync: this,
@@ -44,16 +46,21 @@ class _PlanetsState extends State<Planets> with TickerProviderStateMixin {
         return SizedBox(
           height: MediaQuery.sizeOf(context).height * 0.67,
           child: GridView.builder(
-            itemCount: (value.isList==true)?value.foundList.length:widget.pm?.length,
+            itemCount: (value.isList == true)
+                ? value.foundList.length
+                : widget.pm?.length,
             itemBuilder: (context, index) {
-              var pam =(value.isList==true)? value.foundList[index]:widget.pm?[index];
+              var pam = (value.isList == true)
+                  ? value.foundList[index]
+                  : widget.pm?[index];
 
               return Stack(
                 children: [
                   InkWell(
                     onTap: () {
                       value.playIndex(index);
-                     Navigator.pushNamed(context, "DetailPage",arguments: pam);
+                      Navigator.pushNamed(context, "DetailPage",
+                          arguments: pam);
                     },
                     child: Container(
                       height: MediaQuery.sizeOf(context).height * 0.3,
@@ -70,7 +77,8 @@ class _PlanetsState extends State<Planets> with TickerProviderStateMixin {
                                 InkWell(
                                   onTap: () {
                                     value.playIndex(index);
-                                    Navigator.pushNamed(context, "DetailPage",arguments: pam);
+                                    Navigator.pushNamed(context, "DetailPage",
+                                        arguments: pam);
                                   },
                                   child: Container(
                                     height: MediaQuery.sizeOf(context).height *
@@ -98,26 +106,6 @@ class _PlanetsState extends State<Planets> with TickerProviderStateMixin {
                                             style:
                                                 TextStyle(color: Colors.white),
                                           ),
-                                          // trailing: IconButton(
-                                          //     onPressed: () {
-                                          //       // value.planetIndex = index;
-                                          //       value.playIndex(index);
-                                          //       Navigator.push(
-                                          //         context,
-                                          //         MaterialPageRoute(
-                                          //           builder: (context) =>
-                                          //               DetailPage(
-                                          //                   pm: pam,
-                                          //                   index: value
-                                          //                       .planetIndex),
-                                          //         ),
-                                          //       );
-                                          //     },
-                                          //     icon: Icon(
-                                          //       Icons.arrow_forward_ios,
-                                          //       color: Colors.blue,
-                                          //       size: 30,
-                                          //     )),
                                         ),
                                       ],
                                     ),
@@ -131,12 +119,20 @@ class _PlanetsState extends State<Planets> with TickerProviderStateMixin {
                     ),
                   ),
                   AnimatedBuilder(
-                    child: Hero(
-                      tag: index,
-                      child: Image.asset(
-                        pam?.image ?? "",
-                        height: 110,
-                        width: 200,
+                    child: InkWell(
+                      onTap: () {
+                        value.playIndex(index);
+                        Navigator.pushNamed(context, "DetailPage",
+                            arguments: pam);
+                        hIndex = index;
+                      },
+                      child: Hero(
+                        tag: index,
+                        child: Image.asset(
+                          pam?.image ?? "",
+                          height: 110,
+                          width: 200,
+                        ),
                       ),
                     ),
                     animation: animationController,
@@ -147,7 +143,6 @@ class _PlanetsState extends State<Planets> with TickerProviderStateMixin {
                       );
                     },
                   ),
-
                 ],
               );
             },

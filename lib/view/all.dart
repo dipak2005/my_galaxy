@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, sort_child_properties_last
 
 import 'dart:math';
 
@@ -121,22 +121,19 @@ class _AllState extends State<All> with TickerProviderStateMixin {
                           ],
                         ),
                       ),
-                      Hero(
-                        tag: index,
-                        child: AnimatedBuilder(
-                          animation: animationController,
-                          builder: (BuildContext context, Widget? child) {
-                            return Transform.rotate(
-                              angle: animationController.value,
-                              child: child,
-                            );
-                          },
-                          child: Image.asset(
-                            pam?.image ?? "",
-                            height: 170,
-                            width: 210,
-                          ),
+                      AnimatedBuilder(
+                        child: Image.asset(
+                          pam?.image ?? "",
+                          height: 170,
+                          width: 210,
                         ),
+                        animation: animationController,
+                        builder: (BuildContext context, Widget? child) {
+                          return Transform.rotate(
+                            angle: animationController.value,
+                            child: child,
+                          );
+                        },
                       ),
                     ],
                   );
@@ -145,99 +142,92 @@ class _AllState extends State<All> with TickerProviderStateMixin {
             );
           },
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Text(
-              "You May Like Also",
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  color: Colors.white),
-            ),
-            TextButton(
-                onPressed: () {},
-                child: Text(
-                  "Explore",
-                  style: TextStyle(
-                      color: Colors.blue,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 20),
-                ))
-          ],
+        Align(alignment: Alignment(-0.8, 0),
+          child: Text(
+            "You May Like Also",
+            style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w700,
+                color: Colors.white),
+          ),
         ),
         Consumer<AnimatePro>(
           builder: (BuildContext context, value, Widget? child) {
             return SizedBox(
               height: MediaQuery.sizeOf(context).height * 0.3,
-              child: ListView.builder(
-                itemCount: value.favList.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  Planet fav = value.favList[index];
-                  return Container(
-                      height: MediaQuery.sizeOf(context).height / 2.7,
-                      width: MediaQuery.sizeOf(context).width,
-                      margin: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: Color(0xff0B1418),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Hero(
-                                tag: index,
-                                child: AnimatedBuilder(
-                                  animation: animationController,
-                                  builder:
-                                      (BuildContext context, Widget? child) {
-                                    return Transform.rotate(
-                                      angle: animationController.value,
-                                      child: child,
-                                    );
-                                  },
-                                  child: Image.asset(
-                                    fav.image ?? "",
-                                    height: 150,
-                                    width: 200,
-                                  ),
-                                ),
+              child: (value.favList.isNotEmpty)
+                  ? ListView.builder(
+                      itemCount: value.favList.length,
+                      itemBuilder: (context, index) {
+                        Planet fav = value.favList[index];
+                        return InkWell(
+                          onTap: () {
+                            value.playIndex(index);
+                            Navigator.pushNamed(context, "DetailPage",
+                                arguments: fav);
+                          },
+                          child: Container(
+                              height: MediaQuery.sizeOf(context).height / 2.7,
+                              width: MediaQuery.sizeOf(context).width,
+                              margin: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Color(0xff0B1418),
+                                borderRadius: BorderRadius.circular(20),
                               ),
-                              Column(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  Text(
-                                    fav.name ?? "",
-                                    style: style,
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      AnimatedBuilder(
+                                        animation: animationController,
+                                        builder: (BuildContext context,
+                                            Widget? child) {
+                                          return Transform.rotate(
+                                            angle: animationController.value,
+                                            child: child,
+                                          );
+                                        },
+                                        child: Image.asset(
+                                          fav.image ?? "",
+                                          height: 150,
+                                          width: 200,
+                                        ),
+                                      ),
+                                      Column(
+                                        children: [
+                                          Text(
+                                            fav.name ?? "",
+                                            style: style,
+                                          ),
+                                          Text(
+                                            fav.spe ?? "",
+                                            style: style,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
                                   Text(
-                                    fav.spe ?? "",
+                                    fav.detail ?? "",
                                     style: style,
                                   ),
                                 ],
-                              ),
-                              IconButton(
-                                  onPressed: () {
-                                    value.remove(index);
-                                  },
-                                  icon: Icon(
-                                    Icons.cancel,
-                                    color: Colors.white,
-                                    size: 40,
-                                  ))
-                            ],
-                          ),
-                          Text(
-                            fav.detail ?? "",
-                            style: style,
-                          ),
-                        ],
-                      ));
-                },
-              ),
+                              )),
+                        );
+                      },
+                    )
+                  : Center(
+                      child: Text(
+                        "NoT Exploring Planet Yet!!!",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 26),
+                      ),
+                    ),
             );
           },
         )

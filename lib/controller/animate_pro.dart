@@ -57,14 +57,11 @@ class AnimatePro extends ChangeNotifier {
     notifyListeners();
   }
 
-  void getFavList() async {
-    String? favStr = preferences.getString("favStr");
-    if (favStr != null) {
-      List<dynamic> decode = jsonDecode(favStr);
-      decode.map((json) => json.fromJson(json)).toList();
-    }
-    notifyListeners();
-  }
+  // void getFavList() async {
+  //   String? favStr = preferences.getString("favStr");
+  //
+  //   notifyListeners();
+  // }
 
   void playIndex(int index) {
     planetIndex = index;

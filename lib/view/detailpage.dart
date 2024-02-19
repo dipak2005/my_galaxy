@@ -4,14 +4,15 @@ import 'dart:math';
 
 import 'package:animation/controller/animate_pro.dart';
 import 'package:animation/model/planet_model.dart';
+import 'package:animation/view/planet.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DetailPage extends StatefulWidget {
-  final Planet? pm;
+  // final Planet? pm;
   final int? index;
 
-  const DetailPage({super.key, this.pm, this.index});
+  const DetailPage({super.key, this.index});
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -19,6 +20,7 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
   late Planet? pp;
+
   late final animationController = AnimationController(
     vsync: this,
     upperBound: 2 * pi,
@@ -32,6 +34,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
   @override
   void initState() {
     animationController.repeat();
+
     super.initState();
   }
 
@@ -80,21 +83,20 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
           mainAxisSize: MainAxisSize.min,
           children: [
             Center(
-              child: Hero(
-                  tag: widget.index??0,
-                  child: Consumer<AnimatePro>(
-                    builder: (BuildContext context, value, Widget? child) {
-                      return AnimatedBuilder(
-                          animation: animationController,
-                          builder: (BuildContext context, Widget? child) {
-                            return Transform.rotate(
-                              angle: animationController.value,
-                              child: child,
-                            );
-                          },
-                          child: Image.asset(pp?.image ?? ""));
-                    },
-                  )),
+              child: Consumer<AnimatePro>(
+                builder: (BuildContext context, value, Widget? child) {
+                  return AnimatedBuilder(
+                      animation: animationController,
+                      builder: (BuildContext context, Widget? child) {
+                        return Transform.rotate(
+                          angle: animationController.value,
+                          child: child,
+                        );
+                      },
+                      child: Hero(tag: "index",
+                      child: Image.asset(pp?.image ?? "")));
+                },
+              ),
             ),
             SizedBox(
               height: 30,
@@ -146,13 +148,9 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                             ));
                           },
                           icon: Icon(
-                            (value.favList == value.planetList)
-                                ? Icons.favorite_border
-                                : Icons.favorite,
+                            Icons.favorite_border,
                             size: 30,
-                            color: (value.favList == value.planetList)
-                                ? Colors.white
-                                : Colors.red,
+                            color: Colors.white,
                           ));
                     },
                   ),

@@ -102,27 +102,27 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
         ],
       ),
       body: SingleChildScrollView(
-        child: Container(
-          decoration:
-              BoxDecoration(image: DecorationImage(image: AssetImage(bgimage))),
-          child: Column(
-            children: [
-              Align(
-                alignment: Alignment(-0.7, 0),
-                child: Text(
-                  "Let's Explore!",
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 35,
-                      fontWeight: FontWeight.w900),
-                ),
+        child: Column(
+          children: [
+
+            Align(
+              alignment: Alignment(-0.7, 0),
+              child: Text(
+                "Let's Explore!",
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 35,
+                    fontWeight: FontWeight.w900),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 28.0),
-                child: Consumer<AnimatePro>(
-                  builder:
-                      (BuildContext context, AnimatePro value1, Widget? child) {
-                    return TextFormField(
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 28.0),
+              child: Consumer<AnimatePro>(
+                builder: (BuildContext context, AnimatePro value1,
+                    Widget? child) {
+                  return SizedBox(
+                    height: MediaQuery.sizeOf(context).height * 0.1,
+                    child: TextFormField(
                       onChanged: (value) {
                         value1.show();
                         value1.runFiLLTer(value);
@@ -145,60 +145,57 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                           borderRadius: BorderRadius.circular(20),
                         ),
                       ),
-                    );
-                  },
-                ),
-              ),
-              Positioned(
-                bottom: -2,
-                child: Consumer<AnimatePro>(
-                  builder: (context, value, child) {
-                    return SizedBox(
-                      height: MediaQuery.sizeOf(context).height * 0.08,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: typeList.length,
-                        itemBuilder: (context, index) {
-                          String type = typeList[index];
-                          return InkWell(
-                            onTap: () {
-                              value.changeIndex(index);
-                            },
-                            child: Container(
-                                margin: EdgeInsets.all(20),
-                                child: Text(
-                                  type,
-                                  style: TextStyle(
-                                      color: (index == value.typeIndex)
-                                          ? Colors.blue
-                                          : Colors.white,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w700),
-                                )),
-                          );
-                        },
-                      ),
-                    );
-                  },
-                ),
-              ),
-              Consumer<AnimatePro>(
-                builder: (context, value, child) {
-                  return IndexedStack(
-                    index: value.typeIndex,
-                    children: [
-                      All(
-                        pm: value.planetList,
-                      ),
-                      Planets(pm: value.planetList),
-                      Star(),
-                      Messier(),
-                    ],
+                    ),
                   );
                 },
               ),
-            ],
-          ),
+            ),
+            Consumer<AnimatePro>(
+              builder: (context, value, child) {
+                return SizedBox(
+                  height: MediaQuery.sizeOf(context).height * 0.08,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: typeList.length,
+                    itemBuilder: (context, index) {
+                      String type = typeList[index];
+                      return InkWell(
+                        onTap: () {
+                          value.changeIndex(index);
+                        },
+                        child: Container(
+                            margin: EdgeInsets.all(20),
+                            child: Text(
+                              type,
+                              style: TextStyle(
+                                  color: (index == value.typeIndex)
+                                      ? Colors.blue
+                                      : Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w700),
+                            )),
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
+            Consumer<AnimatePro>(
+              builder: (context, value, child) {
+                return IndexedStack(
+                  index: value.typeIndex,
+                  children: [
+                    All(
+                      pm: value.planetList,
+                    ),
+                    Planets(pm: value.planetList),
+                    Star(),
+                    Messier(),
+                  ],
+                );
+              },
+            ),
+          ],
         ),
       ),
     );

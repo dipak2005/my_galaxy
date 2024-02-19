@@ -25,20 +25,17 @@ class _LikePageState extends State<LikePage> with TickerProviderStateMixin {
       parent: animationController, curve: FlippedCurve(Curves.linear));
 
   @override
+  void initState() {
+    var pro = Provider.of<AnimatePro>(context, listen: false);
+    animationController.repeat();
+    super.initState();
+  }
+
+  @override
   void dispose() {
     animationController.dispose();
     super.dispose();
   }
-
-  @override
-  void initState() {
-    var pro = Provider.of<AnimatePro>(context, listen: false);
-    pro.getFavList();
-    super.initState();
-  }
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -48,19 +45,22 @@ class _LikePageState extends State<LikePage> with TickerProviderStateMixin {
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        leading: CircleAvatar(
-          radius: 30,
-          backgroundColor: Color(0xff0B1418),
-          child: Center(
-            child: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: AnimatedIcon(
-                icon: AnimatedIcons.menu_arrow,
-                size: 30,
-                color: Colors.white,
-                progress: animationController,
+        leading: Hero(
+          tag: "mylike",
+          child: CircleAvatar(
+            radius: 30,
+            backgroundColor: Color(0xff0B1418),
+            child: Center(
+              child: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: AnimatedIcon(
+                  icon: AnimatedIcons.menu_arrow,
+                  size: 30,
+                  color: Colors.white,
+                  progress: animationController,
+                ),
               ),
             ),
           ),
@@ -89,6 +89,14 @@ class _LikePageState extends State<LikePage> with TickerProviderStateMixin {
                               children: [
                                 AnimatedBuilder(
                                   animation: animationController,
+                                  child: Hero(
+                                    tag: index,
+                                    child: Image.asset(
+                                      fav.image ?? "",
+                                      height: 150,
+                                      width: 180,
+                                    ),
+                                  ),
                                   builder:
                                       (BuildContext context, Widget? child) {
                                     return Transform.rotate(
@@ -96,11 +104,6 @@ class _LikePageState extends State<LikePage> with TickerProviderStateMixin {
                                       child: child,
                                     );
                                   },
-                                  child: Image.asset(
-                                    fav.image ?? "",
-                                    height: 150,
-                                    width: 180,
-                                  ),
                                 ),
                                 Column(
                                   children: [
@@ -123,7 +126,6 @@ class _LikePageState extends State<LikePage> with TickerProviderStateMixin {
                                         ))
                                   ],
                                 ),
-
                               ],
                             ),
                             Text(
