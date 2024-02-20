@@ -22,4 +22,9 @@
 - Presentation quality and clarity of communication
 # Screen Shorts (ss):
 # Screen Recoding :
+<img src > ![g](https://github.com/dipak2005/my_galaxy/assets/143473007/64f3c39e-3137-4ebc-a6ed-cb6edc185c19)
+<img src > ![IMG-20240220-WA0004](https://github.com/dipak2005/my_galaxy/assets/143473007/09add095-e5af-4ccf-9c15-914fe1e2c2f7)
+# Screen Recoding:
+https://drive.google.com/drive/u/0/folders/1sBoW7br_5Kbh0AMi-CP2MYIXni4Od-PX
+
 
