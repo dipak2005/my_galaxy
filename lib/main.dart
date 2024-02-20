@@ -8,10 +8,12 @@ import 'package:animation/view/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 late SharedPreferences preferences;
-void main()async {
+
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  preferences=await SharedPreferences.getInstance();
+  preferences = await SharedPreferences.getInstance();
 
   runApp(MyApp());
 }
@@ -31,18 +33,23 @@ class _MyAppState extends State<MyApp> {
         ChangeNotifierProvider(
           create: (context) => AnimatePro(),
         ),
-      ],builder: (context, child) => MaterialApp(
-      title: "Planet App",
-      debugShowCheckedModeBanner: false,
-       theme: ThemeData.light(useMaterial3: true),
-       initialRoute: "/",
-      routes: {
-        "/":(context) =>Splash(),
-        "Home": (context) => Home(),
-        "DetailPage":(context) => DetailPage(),
-        "LikePage":(context) => LikePage(),
-      },
-    ),
+      ],
+      builder: (context, child) => MaterialApp(
+        title: "Planet App",
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData.light(useMaterial3: true),
+        darkTheme: ThemeData.dark(useMaterial3: true),
+        themeMode: Provider.of<AnimatePro>(context).isDark
+            ? ThemeMode.light
+            : ThemeMode.dark,
+        initialRoute: "/",
+        routes: {
+          "/": (context) => Splash(),
+          "Home": (context) => Home(),
+          "DetailPage": (context) => DetailPage(),
+          "LikePage": (context) => LikePage(),
+        },
+      ),
     );
   }
 }

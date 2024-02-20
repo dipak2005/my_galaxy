@@ -39,8 +39,9 @@ class _AllState extends State<All> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    var dark= Provider.of<AnimatePro>(context,listen: false).isDark;
     var style = TextStyle(
-        color: Colors.white, fontWeight: FontWeight.w700, fontSize: 17);
+        color: dark?Colors.black:Colors.white, fontWeight: FontWeight.w700, fontSize: 17);
     return Column(
       children: [
         Consumer<AnimatePro>(
@@ -78,7 +79,7 @@ class _AllState extends State<All> with TickerProviderStateMixin {
                                         MediaQuery.sizeOf(context).width / 1.6,
                                     margin: EdgeInsets.symmetric(horizontal: 5),
                                     decoration: BoxDecoration(
-                                      color: Color(0xff0B1418),
+                                      color:dark? Colors.black12:Color(0xff0B1418),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: Column(
@@ -88,14 +89,14 @@ class _AllState extends State<All> with TickerProviderStateMixin {
                                           title: Text(
                                             (pam?.name ?? "").toUpperCase(),
                                             style: TextStyle(
-                                                color: Colors.white,
+                                                color: dark?Colors.black:Colors.white,
                                                 fontWeight: FontWeight.w700,
                                                 fontSize: 25),
                                           ),
                                           subtitle: Text(
                                             pam?.spe ?? "",
                                             style:
-                                                TextStyle(color: Colors.white),
+                                                TextStyle( color: dark?Colors.black:Colors.white,),
                                           ),
                                           trailing: IconButton(
                                               onPressed: () {
@@ -148,7 +149,7 @@ class _AllState extends State<All> with TickerProviderStateMixin {
             style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w700,
-                color: Colors.white),
+              color: dark?Colors.black:Colors.white,),
           ),
         ),
         Consumer<AnimatePro>(
@@ -171,7 +172,7 @@ class _AllState extends State<All> with TickerProviderStateMixin {
                               width: MediaQuery.sizeOf(context).width,
                               margin: EdgeInsets.all(10),
                               decoration: BoxDecoration(
-                                color: Color(0xff0B1418),
+                                color:dark? Colors.black12:Color(0xff0B1418),
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Column(
@@ -223,7 +224,7 @@ class _AllState extends State<All> with TickerProviderStateMixin {
                       child: Text(
                         "NoT Exploring Planet Yet!!!",
                         style: TextStyle(
-                            color: Colors.white,
+                            color: dark?Colors.black:Colors.white,
                             fontWeight: FontWeight.w700,
                             fontSize: 26),
                       ),

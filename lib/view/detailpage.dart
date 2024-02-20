@@ -53,16 +53,17 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    var style = TextStyle(
-        color: Colors.white, fontWeight: FontWeight.w700, fontSize: 20);
 
+    var dark= Provider.of<AnimatePro>(context,listen: false).isDark;
+    var style = TextStyle(
+        color: dark?Colors.black:Colors.white, fontWeight: FontWeight.w700, fontSize: 17);
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor:  dark?Colors.white: Colors.black,
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: dark?Colors.white:Colors.black,
         leading: CircleAvatar(
           radius: 30,
-          backgroundColor: Color(0xff0B1418),
+          backgroundColor:dark?Colors.black12: Color(0xff0B1418),
           child: Center(
             child: IconButton(
               onPressed: () {
@@ -71,7 +72,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
               icon: AnimatedIcon(
                 icon: AnimatedIcons.menu_arrow,
                 size: 30,
-                color: Colors.white,
+                color: dark?Colors.black:Colors.white,
                 progress: animationController,
               ),
             ),
@@ -104,7 +105,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
             Text(
               (pp?.name ?? "").toUpperCase(),
               style: TextStyle(
-                color: Colors.white,
+                color: dark?Colors.black:Colors.white,
                 fontSize: 30,
                 fontWeight: FontWeight.w700,
               ),
@@ -112,7 +113,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
             Text(
               (pp?.spe ?? "").toUpperCase(),
               style: TextStyle(
-                color: Colors.white,
+                color: dark?Colors.black:Colors.white,
                 fontSize: 30,
                 fontWeight: FontWeight.w700,
               ),
@@ -126,7 +127,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                 Text(
                   "Encyclopedia",
                   style: TextStyle(
-                      color: Colors.white,
+                      color: dark?Colors.black:Colors.white,
                       fontWeight: FontWeight.w700,
                       fontSize: 25),
                 ),
@@ -150,7 +151,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
                           icon: Icon(
                             Icons.favorite_border,
                             size: 30,
-                            color: Colors.white,
+                            color: dark?Colors.black:Colors.white,
                           ));
                     },
                   ),
@@ -173,7 +174,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
             Container(
               margin: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                  color: Color(0xff0B1418),
+                  color:dark? Colors.black12:Color(0xff0B1418),
                   borderRadius: BorderRadius.circular(10)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -213,7 +214,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
             Container(
               margin: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                  color: Color(0xff0B1418),
+                  color:dark? Colors.black12:Color(0xff0B1418),
                   borderRadius: BorderRadius.circular(10)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -253,7 +254,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
             Container(
               margin: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                  color: Color(0xff0B1418),
+                  color:dark? Colors.black12:Color(0xff0B1418),
                   borderRadius: BorderRadius.circular(10)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -293,7 +294,7 @@ class _DetailPageState extends State<DetailPage> with TickerProviderStateMixin {
             Container(
               margin: EdgeInsets.all(10),
               decoration: BoxDecoration(
-                  color: Color(0xff0B1418),
+                  color:dark? Colors.black12:Color(0xff0B1418),
                   borderRadius: BorderRadius.circular(10)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,

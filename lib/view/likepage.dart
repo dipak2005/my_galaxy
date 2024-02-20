@@ -28,6 +28,7 @@ class _LikePageState extends State<LikePage> with TickerProviderStateMixin {
   void initState() {
     var pro = Provider.of<AnimatePro>(context, listen: false);
     animationController.repeat();
+    pro.getData();
     super.initState();
   }
 
@@ -39,17 +40,19 @@ class _LikePageState extends State<LikePage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+
+    var dark= Provider.of<AnimatePro>(context,listen: false).isDark;
     var style = TextStyle(
-        color: Colors.white, fontWeight: FontWeight.w700, fontSize: 17);
+        color: dark?Colors.black:Colors.white, fontWeight: FontWeight.w700, fontSize: 17);
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor:  dark?Colors.white: Colors.black,
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: dark?Colors.white:Colors.black,
         leading: Hero(
           tag: "mylike",
           child: CircleAvatar(
             radius: 30,
-            backgroundColor: Color(0xff0B1418),
+            backgroundColor:dark? Colors.black12:Color(0xff0B1418),
             child: Center(
               child: IconButton(
                 onPressed: () {
@@ -78,7 +81,7 @@ class _LikePageState extends State<LikePage> with TickerProviderStateMixin {
                       width: MediaQuery.sizeOf(context).width / 2,
                       margin: EdgeInsets.all(10),
                       decoration: BoxDecoration(
-                          color: Color(0xff0B1418),
+                          color:dark? Colors.black12:Color(0xff0B1418),
                           borderRadius: BorderRadius.circular(20)),
                       child: SingleChildScrollView(
                         child: Column(
@@ -138,44 +141,46 @@ class _LikePageState extends State<LikePage> with TickerProviderStateMixin {
                     );
                   },
                 )
-              : Column(
-                  // mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.favorite,
-                      color: Colors.red,
-                      size: 370,
-                    ),
-                    Center(
-                        child: Text(
-                      "Not Like Planets Yet!!!",
-                      style: TextStyle(
-                          color: Colors.red,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 20),
-                    )),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    ElevatedButton(
-                      style: ButtonStyle(
-                          shape: MaterialStatePropertyAll(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          backgroundColor:
-                              MaterialStatePropertyAll(Colors.red)),
-                      onPressed: () {
-                        Navigator.pushNamed(context, "Home");
-                      },
-                      child: Text(
-                        "Like the Planet",
-                        style: TextStyle(color: Colors.white),
+              : SingleChildScrollView(
+                child: Column(
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.favorite,
+                        color: Colors.red,
+                        size: 370,
                       ),
-                    )
-                  ],
-                );
+                      Center(
+                          child: Text(
+                        "Not Like Planets Yet!!!",
+                        style: TextStyle(
+                            color: Colors.red,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 20),
+                      )),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      ElevatedButton(
+                        style: ButtonStyle(
+                            shape: MaterialStatePropertyAll(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            backgroundColor:
+                                MaterialStatePropertyAll(Colors.red)),
+                        onPressed: () {
+                          Navigator.pushNamed(context, "Home");
+                        },
+                        child: Text(
+                          "Like the Planet",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      )
+                    ],
+                  ),
+              );
         },
       ),
     );

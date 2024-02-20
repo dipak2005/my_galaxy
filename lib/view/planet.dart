@@ -41,6 +41,9 @@ class _PlanetsState extends State<Planets> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    var dark= Provider.of<AnimatePro>(context,listen: false).isDark;
+    var style = TextStyle(
+        color: dark?Colors.black:Colors.white, fontWeight: FontWeight.w700, fontSize: 17);
     return Consumer<AnimatePro>(
       builder: (BuildContext context, value, Widget? child) {
         return SizedBox(
@@ -87,7 +90,7 @@ class _PlanetsState extends State<Planets> with TickerProviderStateMixin {
                                         MediaQuery.sizeOf(context).width / 1.6,
                                     margin: EdgeInsets.symmetric(horizontal: 5),
                                     decoration: BoxDecoration(
-                                      color: Color(0xff0B1418),
+                                      color:dark? Colors.black12:Color(0xff0B1418),
                                       borderRadius: BorderRadius.circular(10),
                                     ),
                                     child: Column(
@@ -97,14 +100,14 @@ class _PlanetsState extends State<Planets> with TickerProviderStateMixin {
                                           title: Text(
                                             (pam?.name ?? "").toUpperCase(),
                                             style: TextStyle(
-                                                color: Colors.white,
+                                                color: dark?Colors.black:Colors.white,
                                                 fontWeight: FontWeight.w700,
                                                 fontSize: 17),
                                           ),
                                           subtitle: Text(
                                             pam?.spe ?? "",
                                             style:
-                                                TextStyle(color: Colors.white),
+                                                TextStyle( color: dark?Colors.black:Colors.white,),
                                           ),
                                         ),
                                       ],

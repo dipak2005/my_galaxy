@@ -18,17 +18,24 @@ class AnimatePro extends ChangeNotifier {
   String favStr = "";
   Duration duration = Duration();
   List<Planet> foundList = [];
- bool isList=false;
+  bool isList = false;
+  bool isDark = preferences.getBool("dark") ?? false;
+
   void changeIndex(int index) {
     typeIndex = index;
     notifyListeners();
   }
 
-  void show(){
-    isList=true;
+  void theme() {
+    isDark = !isDark;
+    preferences.setBool("dark", isDark);
     notifyListeners();
   }
 
+  void show() {
+    isList = true;
+    notifyListeners();
+  }
 
   void runFiLLTer(String key) {
     List<Planet> result = [];
@@ -47,8 +54,25 @@ class AnimatePro extends ChangeNotifier {
 
   void addFavList(Planet planet) {
     favList.add(planet);
-    favStr = jsonEncode(favList.map((e) => e.toJson()).toList());
-    preferences.setString("favStr", favStr);
+    favStr = jsonEncode(favList.map((product) => product.toJson()).toList());
+    preferences.setString("cart", favStr);
+    notifyListeners();
+  }
+
+  void saveData() {
+    print("SAVED LOCALLY");
+    notifyListeners();
+  }
+
+  void getData() async {
+    print("GET DATA FROM LOCAL");
+
+    String? favListJson = preferences.getString('cart');
+    if (favListJson != null) {
+      List<dynamic> decodedList = jsonDecode(favListJson);
+      favList = decodedList.map((json) => Planet.fromJson(json)).toList();
+      print(favList.length);
+    }
     notifyListeners();
   }
 
@@ -74,7 +98,7 @@ class AnimatePro extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getValue() async {
+  Future<void> getdata() async {
     var fileData = await rootBundle.loadString("lib/model/planet_detail.json");
     jsonDecode(fileData);
     planetList = planetFromJson(fileData);

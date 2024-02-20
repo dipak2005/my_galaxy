@@ -44,22 +44,26 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
   void initState() {
     animationController.repeat();
     var planet = Provider.of<AnimatePro>(context, listen: false);
-    planet.getValue();
+    planet.getdata();
     planet.foundList = planet.planetList;
+    planet.getData();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    var dark = Provider.of<AnimatePro>(context, listen: false).isDark;
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: dark ? Colors.white : Colors.transparent,
       appBar: AppBar(
         title: Text(
           "My  Galaxy ",
           style: TextStyle(
-              color: Colors.white, fontSize: 25, fontWeight: FontWeight.w700),
+              color: dark ? Colors.black : Colors.white,
+              fontSize: 25,
+              fontWeight: FontWeight.w700),
         ),
-        backgroundColor: Colors.transparent,
+        backgroundColor: dark ? Colors.white : Colors.transparent,
         leading: CircleAvatar(
           backgroundColor: Colors.transparent,
           child: Image.asset(
@@ -67,22 +71,30 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
           ),
         ),
         actions: [
-          CircleAvatar(
-            radius: 40,
-            backgroundColor: Color(0xff0B1418),
-            child: Center(
-              child: IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.home_filled,
-                    size: 30,
-                    color: Colors.white,
-                  )),
-            ),
+          Consumer<AnimatePro>(
+            builder: (BuildContext context, value, Widget? child) {
+              return CircleAvatar(
+                radius: 40,
+                backgroundColor: dark ? Colors.black12 : Color(0xff0B1418),
+                child: Center(
+                  child: IconButton(
+                      onPressed: () {
+                        value.theme();
+                      },
+                      icon: Icon(
+                        (value.isDark)
+                            ? Icons.dark_mode_outlined
+                            : Icons.light_mode_outlined,
+                        size: 30,
+                        color: dark ? Colors.black : Colors.white,
+                      )),
+                ),
+              );
+            },
           ),
           CircleAvatar(
             radius: 40,
-            backgroundColor: Color(0xff0B1418),
+            backgroundColor: dark ? Colors.black12 : Color(0xff0B1418),
             child: Center(
               child: Hero(
                 tag: "mylike",
@@ -104,13 +116,12 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
       body: SingleChildScrollView(
         child: Column(
           children: [
-
             Align(
               alignment: Alignment(-0.7, 0),
               child: Text(
                 "Let's Explore!",
                 style: TextStyle(
-                    color: Colors.white,
+                    color: dark ? Colors.black : Colors.white,
                     fontSize: 35,
                     fontWeight: FontWeight.w900),
               ),
@@ -118,8 +129,8 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 28.0),
               child: Consumer<AnimatePro>(
-                builder: (BuildContext context, AnimatePro value1,
-                    Widget? child) {
+                builder:
+                    (BuildContext context, AnimatePro value1, Widget? child) {
                   return SizedBox(
                     height: MediaQuery.sizeOf(context).height * 0.1,
                     child: TextFormField(
@@ -127,20 +138,23 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                         value1.show();
                         value1.runFiLLTer(value);
                       },
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                        color: dark ? Colors.black : Colors.white,
+                      ),
                       decoration: InputDecoration(
                         suffixIcon: Icon(
                           CupertinoIcons.search,
                           size: 30,
                         ),
                         hintText: "Search For More Planets",
-                        hintStyle: TextStyle(color: Colors.grey),
+                        hintStyle:
+                            TextStyle(color: dark ? Colors.black : Colors.grey),
                         filled: true,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                           borderSide: BorderSide(color: Colors.transparent),
                         ),
-                        fillColor: Color(0xff0B1418),
+                        fillColor: dark ? Colors.black12 : Color(0xff0B1418),
                         focusedBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
@@ -170,7 +184,9 @@ class _HomeState extends State<Home> with TickerProviderStateMixin {
                               style: TextStyle(
                                   color: (index == value.typeIndex)
                                       ? Colors.blue
-                                      : Colors.white,
+                                      : dark
+                                          ? Colors.black
+                                          : Colors.white,
                                   fontSize: 20,
                                   fontWeight: FontWeight.w700),
                             )),
